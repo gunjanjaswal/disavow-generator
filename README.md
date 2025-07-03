@@ -1,76 +1,62 @@
-# Google Disavow File Generator
+# BlueCap Disavow Generator
 
-A lightweight, browser-based tool that helps SEO professionals generate properly formatted disavow files for Google Search Console.
+A specialized Python tool that automatically generates Google disavow files by filtering Excel spreadsheets of backlinks for potentially harmful PBN (Private Blog Network) links.
+
+## Purpose
+
+This tool was created specifically for BlueCap Advisors to identify and disavow suspicious backlinks that match patterns associated with PBNs, particularly those with the Wix partner marketplace pattern.
 
 ## Features
 
-- Convert lists of URLs and domains into the exact format required by Google
-- Validate input to ensure proper formatting
-- Automatically detect and fix common formatting errors
-- Add comments to document your disavow decisions
-- Batch process multiple URLs or domains at once
-- No server-side processing - everything happens in your browser
-- Export properly formatted .txt files ready for upload to Google Search Console
+- Automatically processes Excel files containing backlink data
+- Intelligently identifies the URL column in various backlink export formats
+- Filters links matching the `wix.com/marketplace/wix-partner` pattern (common in certain PBNs)
+- Extracts domains from matched URLs
+- Generates properly formatted disavow files ready for Google Search Console
+- Includes timestamps and documentation in the disavow file
+- Easy to use with a simple batch file interface
+
+## Requirements
+
+- Python 3.6 or higher
+- pandas library (automatically installed by the batch file if missing)
 
 ## How to Use
 
-1. Enter URLs or domains you want to disavow (one per line)
-2. Select whether each entry is a URL or domain
-3. Add optional comments to document your decisions
-4. Generate the properly formatted disavow file
-5. Download the .txt file
-6. Upload to Google Search Console
-
-## Input Format
-
-The tool accepts the following formats:
-
-### For URLs:
-```
-https://example.com/bad-page
-http://spam-site.com/page
-www.suspicious-site.com/page.html
-```
-
-### For Domains:
-```
-example.com
-spam-site.com
-www.suspicious-site.com
-```
+1. Place your backlink Excel file in an accessible location
+2. Edit the `run_disavow_generator.bat` file to point to your Excel file (or use the default path)
+3. Double-click the `run_disavow_generator.bat` file
+4. The tool will generate a disavow file in the same directory with a timestamp
 
 ## Output Format
 
 The tool generates a properly formatted disavow file according to Google's specifications:
 
 ```
-# Disavow file generated on 2025-07-03
-# The following URLs were flagged for suspicious backlinks
-domain:example.com
-domain:spam-site.com
-url:https://legitimate-site.com/specific-bad-page.html
+# Disavow file for BlueCap Advisors
+# Generated on: 2025-07-03 18:26:32
+# Filtered for PBN links matching wix.com/marketplace/wix-partner pattern
+
+domain:example-pbn-site.com
+domain:another-suspicious-domain.com
 ```
 
-## Why Use a Disavow File?
+## How It Works
 
-Disavow files tell Google to ignore specific backlinks when assessing your site. This can be helpful if your site has received unnatural or spammy backlinks that might negatively impact your search rankings.
+The tool:
+1. Reads the Excel file containing backlinks
+2. Automatically identifies which column contains URLs
+3. Filters for links matching the Wix partner marketplace pattern
+4. Extracts the domain from each matched URL
+5. Writes a properly formatted disavow file with appropriate headers
 
-## When to Use
+## Customization
 
-- After receiving a manual penalty from Google
-- When you've identified spammy or low-quality backlinks pointing to your site
-- After being the target of a negative SEO attack
-- When cleaning up an old backlink profile with questionable links
+To modify the filtering pattern or other behaviors:
 
-## Important Notes
-
-- Use the disavow tool with caution - only disavow links you're confident are harmful
-- Google recommends trying to remove bad links before disavowing them
-- Changes may take time to be processed by Google after uploading
-
-## License
-
-MIT License
+1. Open `create_disavow_list.py` in a text editor
+2. Change the `pattern` variable to match different PBN patterns
+3. Adjust other parameters as needed
 
 ## Author
 
